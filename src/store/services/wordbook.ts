@@ -1,4 +1,4 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { emptySplitApi } from "../slices/apiSlice";
 
 interface WordbookResponse {
   id: string;
@@ -6,16 +6,10 @@ interface WordbookResponse {
   definition: string;
 }
 
-export const wordbookApi = createApi({
-  reducerPath: "wordbookApi",
-  baseQuery: fetchBaseQuery({
-    baseUrl: "http://localhost:3000/definitions",
-  }),
-  tagTypes: ["Wordbook"],
+export const wordbookApi = emptySplitApi.injectEndpoints({
   endpoints: (build) => ({
     getWordbook: build.query<WordbookResponse, void>({
-      query: () => "",
-      providesTags: ["Wordbook"],
+      query: () => "definitions",
     }),
     addWordbookEntry: build.mutation<
       WordbookResponse,
@@ -23,14 +17,14 @@ export const wordbookApi = createApi({
     >({
       query(body) {
         return {
-          url: ``,
+          url: "definitions",
           method: "POST",
           body,
         };
       },
-      invalidatesTags: ["Wordbook"],
     }),
   }),
+  overrideExisting: false,
 });
 
 export const { useGetWordbookQuery, useAddWordbookEntryMutation } = wordbookApi;
