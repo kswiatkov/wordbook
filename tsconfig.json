@@ -17,5 +17,5 @@
     "jsx": "react-jsx",
     "baseUrl": "src"
   },
-  "include": ["src", "app", "features"]
+  "include": ["src", "app", "features", "store"]
 }
