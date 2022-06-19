@@ -6,10 +6,11 @@ export const Button = styled.button`
   outline: none;
   border: none;
   cursor: pointer;
-  border-radius: 2px;
+  border-radius: ${({ theme }) => theme.borderRadius};
   height: ${({ theme }) => theme.spacing["8"]};
   font-size: ${({ theme }) => theme.fontSizes.md};
   color: ${(props) => props.color ?? props.theme.colors.text};
   padding-left: ${({ theme }) => theme.spacing["4"]};
   padding-right: ${({ theme }) => theme.spacing["4"]};
+  letter-spacing: ${({ theme }) => theme.letterSpacings.wider};
 `;

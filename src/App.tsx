@@ -1,15 +1,19 @@
 import { ThemeProvider } from "styled-components";
 import theme from "theme";
 import DictionarySearch from "components/DictionarySearch";
-import { Box } from "components/ui";
+import Wordbook from "components/Wordbook";
+import { Flex } from "components/ui";
 import "./App.css";
 
 function App() {
   return (
     <ThemeProvider theme={theme}>
-      <Box className="App">
-        <DictionarySearch />
-      </Box>
+      <div className="App">
+        <Flex>
+          <DictionarySearch />
+          <Wordbook />
+        </Flex>
+      </div>
     </ThemeProvider>
   );
 }

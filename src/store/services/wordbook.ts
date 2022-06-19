@@ -1,6 +1,6 @@
 import { emptySplitApi } from "../slices/apiSlice";
 
-interface WordbookResponse {
+interface WordbookEntry {
   id: string;
   word: string;
   definition: string;
@@ -8,11 +8,11 @@ interface WordbookResponse {
 
 export const wordbookApi = emptySplitApi.injectEndpoints({
   endpoints: (build) => ({
-    getWordbook: build.query<WordbookResponse, void>({
+    getWordbook: build.query<WordbookEntry[], void>({
       query: () => "definitions",
     }),
     addWordbookEntry: build.mutation<
-      WordbookResponse,
+      WordbookEntry,
       { word: string; definition: string }
     >({
       query(body) {

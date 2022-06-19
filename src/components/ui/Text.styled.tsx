@@ -11,4 +11,5 @@ export const Text = styled.p<TextProps>`
     (props.darker ? props.theme.colors.textDarker : props.theme.colors.text)};
   margin: 0;
   padding: 0;
+  letter-spacing: ${({ theme }) => theme.letterSpacings.normal};
 `;

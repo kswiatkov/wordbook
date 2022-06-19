@@ -1,6 +1,7 @@
 import { configureStore, ConfigureStoreOptions } from "@reduxjs/toolkit";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { wordbookApi } from "./services/wordbook";
+import { dictionarySlice } from "./slices/dictionarySlice";
 
 export const createStore = (
   options?: ConfigureStoreOptions["preloadedState"] | undefined
@@ -8,6 +9,7 @@ export const createStore = (
   configureStore({
     reducer: {
       [wordbookApi.reducerPath]: wordbookApi.reducer,
+      dictionary: dictionarySlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware().concat(wordbookApi.middleware),

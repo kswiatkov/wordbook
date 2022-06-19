@@ -22,3 +22,10 @@ export interface DictionaryResult {
   origin: string;
   meanings: Meaning[];
 }
+
+export enum RequestStatus {
+  idle,
+  pending,
+  fulfilled,
+  rejected,
+}
