@@ -6,13 +6,13 @@ export interface Phonetic {
 export interface Definition {
   definition: string;
   example: string;
-  synonyms: any[];
-  antonyms: any[];
 }
 
 export interface Meaning {
   partOfSpeech: string;
   definitions: Definition[];
+  synonyms: string[];
+  antonyms: string[];
 }
 
 export interface DictionaryResult {

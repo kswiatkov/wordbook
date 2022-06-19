@@ -1,45 +1,46 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useForm } from "react-hook-form";
 import { useLazyGetDefinitionsQuery } from "store/services/dictionary";
 import { useAddWordbookEntryMutation } from "store/services/wordbook";
+import { Text, Button, Input, HStack, VStack } from "components/ui";
 
 const DictionarySearch = () => {
-  const [searchInputState, setSearchInputState] = useState("");
-  const [triggerGetDefinitions, { data }] = useLazyGetDefinitionsQuery();
+  const { register, handleSubmit } = useForm<{ searchValue: string }>();
+  const [triggerGetDefinitions, { data: dictionaryResults }] =
+    useLazyGetDefinitionsQuery();
   const [addWordbookEntry] = useAddWordbookEntryMutation();
 
-  useEffect(() => {
-    if (!searchInputState.length) {
-      return;
-    }
-    const timeout = setTimeout(
-      () => triggerGetDefinitions(searchInputState),
-      500
-    );
-    return () => {
-      clearTimeout(timeout);
-    };
-  }, [searchInputState, triggerGetDefinitions]);
-
   return (
-    <>
-      <input
-        type="text"
-        value={searchInputState}
-        onChange={(e) => setSearchInputState(e.target.value)}
-      />
-      {data?.map(({ meanings, word }) =>
-        meanings.map(({ definitions }) =>
-          definitions.map(({ definition }) => (
-            <div key={definition}>
-              <p>{definition}</p>
-              <button onClick={() => addWordbookEntry({ word, definition })}>
-                save
-              </button>
-            </div>
-          ))
-        )
+    <form
+      onSubmit={handleSubmit(({ searchValue }) =>
+        triggerGetDefinitions(searchValue)
       )}
-    </>
+    >
+      <VStack>
+        <HStack>
+          <Input {...register("searchValue")} />
+          <Button type="submit">Search</Button>
+        </HStack>
+        {dictionaryResults?.map(({ meanings, word }) =>
+          meanings
+            .slice(0, 2)
+            .map(({ definitions, partOfSpeech, synonyms }) => (
+              <div key={definitions[0].definition}>
+                <Text>{partOfSpeech}</Text>
+                <Text>{definitions[0].definition}</Text>
+                {definitions[0].example && (
+                  <Text darker>example: {definitions[0].example}</Text>
+                )}
+                <HStack>
+                  {synonyms.map((s) => (
+                    <Button key={s}>{s}</Button>
+                  ))}
+                </HStack>
+              </div>
+            ))
+        )}
+      </VStack>
+    </form>
   );
 };
 
